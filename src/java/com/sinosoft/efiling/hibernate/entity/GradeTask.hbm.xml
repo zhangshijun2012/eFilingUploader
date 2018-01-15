@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.GradeTask" table="UTIGRADETASK">
+        <composite-id name="id" class="com.sinosoft.efiling.hibernate.entity.GradeTaskId">
+            <key-property name="gradeCode" type="string">
+                <column name="GRADECODE" length="3" />
+            </key-property>
+            <key-property name="taskCode" type="string">
+                <column name="TASKCODE" length="60" />
+            </key-property>
+        </composite-id>
+        
+        <many-to-one name="grade" class="com.sinosoft.efiling.hibernate.entity.Grade" update="false" insert="false" fetch="select">
+            <column name="GRADECODE" length="3" not-null="true" />
+        </many-to-one>
+        
+        <many-to-one name="task" class="com.sinosoft.efiling.hibernate.entity.Task" update="false" insert="false" fetch="select">
+            <column name="TASKCODE" length="60" not-null="true" />
+        </many-to-one>
+        
+        <property name="value" type="string">
+            <column name="VALUE" length="1" not-null="true" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

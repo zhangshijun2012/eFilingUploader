@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文件上传</title>
+<style type="text/css">
+<!--
+html,body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#uploadFrame {
+	width: 100%;
+	height: 100%;
+}
+//-->
+</style>
+<script type="text/javascript">
+	var parameters = { };
+	/** 得到所有参数 */
+	function getParameters() {
+		var queryString = window.location.search;
+		c = queryString.charAt(0);
+		while (c == '?' || c == '#') {
+			queryString = queryString.substring(1);
+			if (!queryString) break;
+			c = queryString.charAt(0);
+		}
+		// parameters = {};
+		if (!queryString) return parameters;
+		var params = queryString.split('&');
+		for ( var i = 0, l = params.length; i < l; i++) {
+			if (!params[i]) return;
+			var values = params[i].split('=');
+			var key = decodeURIComponent(values[0]);
+			var value = decodeURIComponent(values[1] || '');
+			// alert(values + '/' + key + '=' + value);
+			if (!parameters[key]) parameters[key] = [ value ];
+			else parameters[key].push(value);
+			// alert(parameters[key] + ' ' + parameters['batch'] + ' ' + getParameter('batch') );
+		}
+		return parameters;
+	}
+
+	/** 得到key参数的值 */
+	function getParameter(key) {
+		var values = parameters[key];
+		return values ? values[0] : '';
+	}
+	getParameters();
+	// alert(window.location.search + ' ' + getParameter('batch'));
+</script>
+</head>
+<body>
+	<!-- 使用在首页下内嵌iframe的原因是为了去掉滚动条 -->
+	<iframe src="index.html" id="uploadFrame" name="uploadFrame" scrolling="no" frameborder="0"></iframe>
+</body>
+</html>

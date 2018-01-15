@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+	<!-- 注意package中namespace属性，如果有这必须以/开头，且最后的/不能有,如：/path1/path2；如果为path1/path2/或/path1/path2/则无法找到 -->
+	<!-- 适用自定义的文件上传 -->
+	<!-- <bean type="org.apache.struts2.dispatcher.multipart.MultiPartRequest" name="multiPartRequestSupport"
+			class="com.sinosoft.util.struts2.MultiPartRequestSupport" scope="default" optional="true" />
+    <constant name="struts.multipart.handler" value="multiPartRequestSupport" /> -->
+    
+	<!-- 定义一个全局的包,以便覆盖struts-default.此是所有包的父对象 -->
+	<package name="struts-global" abstract="true" extends="struts-default">
+		<interceptors>
+			<interceptor name="createEntityIntercepter" class="com.sinosoft.util.struts2.intercepter.CreateEntityIntercepter" />
+			<interceptor-stack name="globalStack">
+				<interceptor-ref name="createEntityIntercepter">
+					<!-- 对于保存的方法,需要在注入参数前先创建entity对象 -->
+					<param name="includeMethods">save, update, upload, copy*, save*, update*, delete*, remove*, *</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="globalStack" />
+	
+		<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="errorHTML">/errorHTML.jsp</result>
+			<result name="input">/error.jsp</result>
+			<result name="login">/main.jsp</result>
+			<result name="logout">/logout.html</result>
+			<result name="list">/list.jsp</result>
+			<result name="tree">/tree.jsp</result>
+			<result name="index">index.jsp</result>
+			
+			<result name="append">edit.jsp</result>
+			<result name="view">view.jsp</result>
+			<result name="edit">edit.jsp</result>
+			<result name="query">/list.jsp</result>
+		</global-results>
+	</package>
+		
+	<package name="defaultNamespace" extends="struts-global">
+		<!-- 查询当前的资源文件信息 -->
+		<action name="index" class="userAction" method="index">
+			<result name="index">/main.jsp</result>
+		</action>
+		 
+		<!-- 查询所有可切换的登录机构 -->
+		<action name="queryCompanies" class="userAction" method="queryCompanies"></action>
+		<!-- 登录,选择了登录机构后提交的地址 -->
+		<action name="login" class="userAction" method="login"></action>
+		<!-- 登出 -->
+		<action name="logout" class="userAction" method="logout"></action>
+		<!-- 加载菜单 -->
+		<action name="loadMenus" class="userAction" method="loadMenus">
+			<result name="success">/menu.jsp</result>
+		</action>
+		<!-- 查询用户信息 -->
+		<action name="user" class="userAction" method="view"></action>
+		
+		<!-- 查询当前的资源文件信息 -->
+		<action name="getResources" class="userAction" method="getResources"></action>
+	
+		<action name="upload" class="fileIndexAction" method="upload"></action>
+		<!-- 这个action主要针对sinosoftInterface接口 -->
+		<action name="copy" class="fileIndexAction" method="copy"></action>
+		<action name="save" class="fileIndexAction" method="save"></action>
+		<action name="query" class="fileIndexAction" method="query"></action>
+		<action name="list" class="fileIndexAction" method="list"></action>
+		<action name="show" class="fileIndexAction" method="show">
+			<result name="show">show.jsp</result>
+		</action>
+		<action name="preview" class="fileIndexAction" method="preview"></action>
+		<action name="view" class="fileIndexAction" method="view">
+			<result name="image">image.jsp</result>
+			<result name="tiff">tiff.jsp</result>
+		</action>
+		<action name="read" class="fileIndexAction" method="read"></action>
+		<action name="download" class="fileIndexAction" method="download"></action>
+		<action name="copyHistory" class="fileIndexAction" method="copyHistory"></action>
+		<!-- 禁用文件 -->
+		<action name="disable" class="fileIndexAction" method="disable"></action>
+	</package>
+	
+	<!-- SystemCode密码设置 -->
+	<package name="fileSystemAction" namespace="/uploader/validate" extends="struts-global">
+		<action name="index" class="fileSystemAction" method="index">
+			<result name="success">index.jsp</result>
+		</action>
+		<action name="modify" class="fileSystemAction" method="modify"></action>
+	</package>
+</struts>

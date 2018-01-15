@@ -1,0 +1,223 @@
+@charset "utf-8";
+/** 全局样式 */
+html, body {
+	margin: auto;
+	width: 100%;
+	height: 100%;
+}
+body,form,table {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	font-family: sans-serif, Verdana, arial, 宋体;
+}
+p {
+	margin: 0px;
+	line-height: 20px;
+}
+ol, ul {
+	padding: 0px;
+	margin-top: 0px;
+	line-height: 18px;
+}
+input, select {
+	vertical-align: middle;
+	box-sizing: border-box;
+	/* height: 22px; */
+}
+
+input.calendar {
+	background: url(../images/calendar_bg.gif) no-repeat right center;
+	border: 1px solid #707070;
+}
+
+input.input-shorter {
+	width: 100px;
+}
+
+a {
+	color: #0066cc;
+	text-decoration: none;
+	outline: none;
+}
+a:hover {
+	color: red;
+	text-decoration: underline;
+}
+
+a.disabled, a.disabled:hover {
+	cursor: text;
+	text-decoration: none;
+	outline: none;
+	color: gray;
+}
+
+div {
+	zoom: 1;
+}
+
+/* 按钮，最多为4个字 */
+.button, table.form .actionBar input {
+	width: 59px;
+	height: 24px;
+	line-height: 25px;
+	border: 0;
+	padding: 0;
+	margin: 0 5px;
+	color: #164c86;
+	text-align: center;
+	background: url(../images/button_bg.gif) no-repeat center;
+}
+
+/* 按钮，最多为6个字 */
+.button6, table.form .actionBar input.button6 {
+	width: 89px;
+	height: 24px;
+	line-height: 25px;
+	border: 0;
+	padding: 0;
+	margin: 0 5px;
+	color: #164c86;
+	text-align: center;
+	background: url(../images/button6_bg.gif) no-repeat center;
+}
+
+hr {
+	border: 0px;
+	border-top: 1px solid #000000;
+	height: 1px;
+}
+/** 常用样式 */
+/*------------------------------- 常用字体样式 -----------------------------*/
+.txtLeft,.string,.String { /* 左对齐 */
+	text-align: left;
+}
+
+.txtRight { /* 右对齐 */
+	text-align: right;
+}
+
+input.number,input.Number { /* 在ie中，输入框中的.number样式左对齐,如果右对齐则不能看到光标 */
+	text-align: right !important;
+	text-align: left;
+}
+
+.txtCenter { /* 居中 */
+	text-align: center;
+}
+
+/* 表格样式已经统一调整为文本居中 */
+.number,.Number{}
+.date,.Date {}
+
+.middle {
+	vertical-align: middle;
+}
+.marginAuto {
+	margin: auto;
+}
+
+.b,.B,.strong { /* 加粗 */
+	font-weight: bold;
+}
+
+.red { /* 红色 */
+	color: red;
+}
+.required {
+}
+.gray { /* 灰色 */
+	color: gray;
+}
+
+.white { /* 白色 */
+	color: white;
+}
+
+/*------------------------------- 常用方法 -----------------------------*/
+.show { /* 可见 */
+	display: block;
+}
+
+.hidden { /* 隐藏 */
+	display: none;
+}
+
+.hand, .pointer { /* 光标样式(手型) */
+	cursor: pointer;
+}
+
+.floatLeft { /* 左浮动 */
+	float: left;
+}
+
+.floatRight { /* 右浮动 */
+	float: right;
+}
+
+.width { /* 100%宽度 */
+	width: 100%;
+}
+
+.height { /* 100%高度 */
+	height: 100%;
+}
+
+.scroll { /* 显示滚动框 */
+	overflow: auto;
+}
+
+.marginTop {
+	margin-top: 10px;
+}
+
+.marginRight {
+	margin-right: 10px;
+}
+
+.marginBottom {
+	margin-bottom: 10px;
+}
+
+.marginLeft {
+	margin-left: 10px;
+}
+
+.margin {
+	margin: 5 5 5 5;
+}
+
+.paddingTop {
+	padding-top: 10px;
+}
+
+.paddingRight {
+	padding-right: 10px;
+}
+
+.paddingBottom {
+	padding-bottom: 10px;
+}
+
+.paddingLeft {
+	margin-left: 10px;
+}
+
+/* 相对定位 */
+.relative {
+	position: relative;
+	top: 0;
+	left: 0;
+}
+/* 打印 */
+#printBody {
+	padding-bottom: 70px;
+	background: url(../images/security_mark.png) no-repeat bottom center;
+}
+.pagingAfter,#pagingAfter { /* 打印分页符.当打印时,会在使用此样式的对象后面进行分页 */
+	page-break-after: always;
+}
+
+.pagingBefore,#pagingBefore { /* 打印分页符.当打印时,会在使用此样式的对象前面进行分页 */
+	page-break-before: always;
+}

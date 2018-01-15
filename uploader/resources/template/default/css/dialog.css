@@ -1,0 +1,175 @@
+@charset "utf-8";
+/* CSS Document */
+.dialog {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9000;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	box-sizing: content-box;
+	margin: 0;
+}
+.dialog div {
+	margin: 0;
+}
+.dialog-overlayer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	filter: alpha(opacity=50);	/* IE半透明 */
+	-moz-opacity: 0.5;			/* 火狐半透明 */
+	opacity: .50;				/* 支持CSS3的浏览器（FF 1.5也支持） */
+	overflow: hidden;
+}
+
+.dialog-dialog {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #ffffff;
+	border: #dddddd 1px solid;
+	overflow: hidden;
+	box-sizing: content-box;
+}
+
+.dialog-header {
+	width: 100%;
+	background: url(../images/dialog_header_bg.jpg) repeat-x top;
+	height: 25px;
+	line-height: 25px;
+	overflow: hidden;
+}
+.dialog-header-title {
+	font-weight: bold;
+	padding: 0 5px;
+	float: left;
+	overflow: hidden;
+}
+.dialog-header-button {
+	height: 25px;
+	float: right;
+	padding: 5px 5px 0 0;
+}
+.dialog-header-button div {
+	height: 15px;
+	float: right;
+}
+
+.dialog .dialog-body {
+	padding: 10px;
+	overflow: auto;
+	box-sizing: border-box;
+}
+
+.dialog-footer {
+	width: 100%;
+	padding: 5px 0;
+	border-top: #8ea0a9 1px solid;
+	line-height: 22px;
+	text-align: center;
+}
+
+/* loading框 */
+.dialog-loading, #loading-dialog  {
+	z-index: 9999;
+}
+
+.dialog-loading .dialog-dialog, #loading-dialog .dialog-dialog {
+	background: #fcfdd5;
+	border: #dddddd 1px solid;
+	display: inline;
+	padding: 4px 8px;
+	white-space: nowrap;
+}
+
+.dialog-loading .dialog-body, #loading-dialog .dialog-body {
+	overflow: hidden;
+	display: inline;
+	white-space: nowrap;
+	padding: 0px;
+}
+
+/* 选择机构对话框 */
+.dialog-login {
+	z-index: 9900;
+}
+.dialog-login .dialog-login-dialog {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+	border: 0px;
+	width: 481px;
+	/*
+	border-radius: 15px;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #000000;
+	*/
+}
+.dialog-login .dialog-login-dialog .dialog-body {
+	padding: 0;
+	overflow: hidden;
+}
+.dialog-login .dialog-login-dialog div {
+	width: 481px;
+}
+.dialog-login .login-dialog-header {
+	background: url(../images/login/dialog_header_bg.gif) no-repeat center bottom;
+	height: 61px;
+}
+.dialog-login .login-dialog-nav {
+	background: url(../images/login/dialog_nav_bg.gif) no-repeat center top;
+	height: 91px;
+}
+
+.dialog-login .login-dialog-body {
+	padding: 0px;
+	margin: 0px;
+	background-color: #ffffff;
+}
+.dialog-login .login-dialog-body .login-dialog-body-body {
+	box-sizing: content-box;
+	padding: 30px 0;
+	background: url(../images/login/dialog_body_bg.gif) repeat-y center;
+}
+.dialog-login .login-dialog-body p {
+	height: 26px;
+	line-height: 26px;
+	padding: 0 0 0 80px;
+}
+.dialog-login .login-dialog-body p input, .dialog-login .login-dialog-body p select {
+	box-sizing: border-box;
+	width: 240px;
+	margin-left: 3px;
+}
+.dialog-login .login-dialog-footer {
+	background: url(../images/login/dialog_footer_bg.gif) no-repeat center top;
+	height: 56px;
+	line-height: 56px;
+	box-sizing: content-box;
+	text-align: center;
+	vertical-align: middle;
+}
+/* 按钮，最多为4个字 */
+.dialog-login .login-dialog-footer .button {
+	width: 61px;
+	height: 22px;
+	border: 0;
+	padding: 0;
+	margin: 0 5px;
+	color: #ffffff;
+	text-align: center;
+	background: url(../images/login/button_bg.gif) no-repeat center;
+}
+
+.dialog-login .dialog-login-hidden {
+	visibility: hidden;
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.Company" table="PRPDCOMPANY">
+        <id name="comCode" type="string">
+            <column name="COMCODE" length="8" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="parent" class="com.sinosoft.efiling.hibernate.entity.Company" insert="false" update="false" fetch="select">
+            <column name="UPPERCOMCODE" length="8" not-null="true" />
+        </many-to-one>
+        <set name="children" table="PRPDCOMPANY" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UPPERCOMCODE" length="8" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.Company" />
+        </set>
+        <property name="name" type="string">
+            <column name="COMCNAME" length="80" not-null="true" />
+        </property>
+        <property name="comEName" type="string">
+            <column name="COMENAME" length="80" />
+        </property>
+        <property name="addressName" type="string">
+            <column name="ADDRESSCNAME" />
+        </property>
+        <property name="addressEName" type="string">
+            <column name="ADDRESSENAME" length="80" />
+        </property>
+        <property name="postCode" type="string">
+            <column name="POSTCODE" length="6" />
+        </property>
+        <property name="phoneNumber" type="string">
+            <column name="PHONENUMBER" length="30" />
+        </property>
+        <property name="taxNumber" type="string">
+            <column name="TAXNUMBER" length="30" />
+        </property>
+        <property name="faxNumber" type="string">
+            <column name="FAXNUMBER" length="20" />
+        </property>
+        <property name="insurerName" type="string">
+            <column name="INSURERNAME" length="80" />
+        </property>
+        <property name="comAttribute" type="string">
+            <column name="COMATTRIBUTE" length="1" />
+        </property>
+        <property name="comType" type="string">
+            <column name="COMTYPE" length="10" />
+        </property>
+        <property name="comLevel" type="string">
+            <column name="COMLEVEL" length="1" />
+        </property>
+        <property name="manager" type="string">
+            <column name="MANAGER" length="8" />
+        </property>
+        <property name="accountLeader" type="string">
+            <column name="ACCOUNTLEADER" length="8" />
+        </property>
+        <property name="cashier" type="string">
+            <column name="CASHIER" length="8" />
+        </property>
+        <property name="accountant" type="string">
+            <column name="ACCOUNTANT" length="8" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" length="40" />
+        </property>
+        <property name="newComCode" type="string">
+            <column name="NEWCOMCODE" length="20" not-null="true" />
+        </property>
+        <property name="validStatus" type="string">
+            <column name="VALIDSTATUS" length="1" not-null="true" />
+        </property>
+        <property name="acntUnit" type="string">
+            <column name="ACNTUNIT" length="8" />
+        </property>
+        <property name="articleCode" type="string">
+            <column name="ARTICLECODE" length="10" />
+        </property>
+        <property name="accCode" type="string">
+            <column name="ACCCODE" length="6" />
+        </property>
+        <property name="centerFlag" type="string">
+            <column name="CENTERFLAG" length="1" />
+        </property>
+        <property name="outerPayCode" type="string">
+            <column name="OUTERPAYCODE" length="8" />
+        </property>
+        <property name="innerPayCode" type="string">
+            <column name="INNERPAYCODE" length="8" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+        <property name="webAddress" type="string">
+            <column name="WEBADDRESS" length="30" />
+        </property>
+        <property name="servicePhone" type="string">
+            <column name="SERVICEPHONE" length="20" />
+        </property>
+        <property name="reportPhone" type="string">
+            <column name="REPORTPHONE" length="20" />
+        </property>
+        <property name="agentCode" type="string">
+            <column name="AGENTCODE" length="13" />
+        </property>
+        <property name="agreementNo" type="string">
+            <column name="AGREEMENTNO" length="20" />
+        </property>
+        <property name="sysAreaCode" type="string">
+            <column name="SYSAREACODE" length="6" />
+        </property>
+        <property name="comBVisitRate" type="double">
+            <column name="COMBVISITRATE" precision="4" scale="1" />
+        </property>
+        <property name="printComname" type="string">
+            <column name="PRINTCOMNAME" />
+        </property>
+        <property name="printAddress" type="string">
+            <column name="PRINTADDRESS" />
+        </property>
+        <property name="pringPostCode" type="string">
+            <column name="PRINGPOSTCODE" />
+        </property>
+        <property name="comSign" type="string">
+            <column name="COMSIGN" length="10" />
+        </property>
+        <property name="motorAreaCode" type="string">
+            <column name="MOTORAREACODE" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

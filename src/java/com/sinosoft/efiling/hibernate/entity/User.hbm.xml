@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.User" table="PRPDUSER">
+        <id name="id" type="string">
+            <column name="USERCODE" length="10" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="department" class="com.sinosoft.efiling.hibernate.entity.Company" fetch="select">
+            <column name="COMCODE" length="8" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="USERNAME" length="30" />
+        </property>
+        <property name="no" type="string">
+            <column name="USERENAME" length="30" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="PASSWORD" length="64" />
+        </property>
+        <property name="seal" type="string">
+            <column name="SEAL" length="64" />
+        </property>
+        <property name="passwordSetDate" type="timestamp">
+            <column name="PASSWORDSETDATE" length="7" />
+        </property>
+        <property name="passwordExpireDate" type="timestamp">
+            <column name="PASSWORDEXPIREDATE" length="7" not-null="true" />
+        </property>
+        <property name="makeCom" type="string">
+            <column name="MAKECOM" length="8" not-null="true" />
+        </property>
+        <property name="accountCode" type="string">
+            <column name="ACCOUNTCODE" length="8" />
+        </property>
+        <property name="phone" type="string">
+            <column name="PHONE" length="18" />
+        </property>
+        <property name="mobile" type="string">
+            <column name="MOBILE" length="50" />
+        </property>
+        <property name="address" type="string">
+            <column name="ADDRESS" length="60" />
+        </property>
+        <property name="postCode" type="string">
+            <column name="POSTCODE" length="6" />
+        </property>
+        <property name="email" type="string">
+            <column name="EMAIL" length="60" />
+        </property>
+        <property name="userFlag" type="string">
+            <column name="USERFLAG" length="10" />
+        </property>
+        <property name="loginSystem" type="string">
+            <column name="LOGINSYSTEM" length="20" />
+        </property>
+        <property name="newUserCode" type="string">
+            <column name="NEWUSERCODE" length="10" not-null="true" />
+        </property>
+        <property name="validStatus" type="string">
+            <column name="VALIDSTATUS" length="1" not-null="true" />
+        </property>
+        <property name="articleCode" type="string">
+            <column name="ARTICLECODE" length="8" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" />
+        </property>
+        <property name="maxOverdueCount" type="int">
+            <column name="MAXOVERDUECOUNT" precision="6" scale="0" />
+        </property>
+        <property name="maxOverdueFee" type="double">
+            <column name="MAXOVERDUEFEE" precision="14" />
+        </property>
+        <property name="macAddress" type="string">
+            <column name="MACADDRESS" length="12" />
+        </property>
+        <property name="businessFlag" type="string">
+            <column name="BUSINESSFLAG" length="1" />
+        </property>
+        <property name="agentCode" type="string">
+            <column name="AGENTCODE" length="40" />
+        </property>
+        <set name="userGrades" table="UTIUSERGRADE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="USERCODE" length="10" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.UserGrade" />
+        </set>
+    </class>
+</hibernate-mapping>

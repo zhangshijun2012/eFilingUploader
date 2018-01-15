@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>eFiling Uploader</title>
+	<style type="text/css">
+		html,body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		
+		#logoutFrame {
+			width: 100%;
+			height: 100%;
+			border: 0px;
+			overflow: hidden;
+			display: none;
+		}
+	</style>
+	<script type="text/javascript">
+		// 此页面的主要目的是为了是页面等进入单点的调用
+		var parameters = { };
+		var queryString = window.location.search;
+		// alert(queryString);
+		/** 得到所有参数 */
+		function getParameters() {
+			// var queryString = window.location.search;
+			c = queryString.charAt(0);
+			while (c == '?' || c == '#') {
+				queryString = queryString.substring(1);
+				if (!queryString) break;
+				c = queryString.charAt(0);
+			}
+			if (!queryString) return parameters;
+			var params = queryString.split('&');
+			for ( var i = 0, l = params.length; i < l; i++) {
+				if (!params[i]) return;
+				var values = params[i].split('=');
+				var key = decodeURIComponent(values[0]);
+				var value = decodeURIComponent(values[1] || '');
+				if (!parameters[key]) parameters[key] = [ value ];
+				else parameters[key].push(value);
+			}
+			return parameters;
+		}
+		
+		getParameters();
+	
+		/** 得到key参数的值 */
+		function getParameter(key) {
+			var values = parameters[key];
+			if (typeof values == 'String' || typeof values == 'string') return values || '';
+			return values ? values[0] : '';
+		}
+		
+		var url = getParameter('url');
+		queryString = queryString.replace(/url\=[^&]*&?/, '');	// 去掉查询参数的url
+		document.location	= url + '?' + queryString;
+	</script>
+</head>
+<body>
+</body>
+</html>

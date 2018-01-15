@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>e-Filing 电子档案管理系统</title>
+	<style type="text/css">
+		html,body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		
+		#logoutFrame {
+			width: 100%;
+			height: 100%;
+			border: 0px;
+			overflow: hidden;
+			display: none;
+		}
+	</style>
+	<script type="text/javascript" src="resources/javascript/base.js"></script>
+	<script type="text/javascript">
+		var login = function() {
+			// alert('Logout');
+			var win = window;
+			if (parent && parent[SYSTEM_CODE] === true) win = parent;
+			window.location = SERVER_ROOT +　'?logout=true' + new Date();	// 进入首页CAS会自动调入登录页面
+		}
+	</script>
+</head>
+<body onload="login()">
+	<!-- 连接至单点的登出页面 -->
+	<!-- <iframe onload="login()" name="logoutFrame" id="logoutFrame" src="/casserver/logout"></iframe> -->
+</body>
+</html>

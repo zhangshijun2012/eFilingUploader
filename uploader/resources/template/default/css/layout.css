@@ -1,0 +1,220 @@
+/* 整体布局样式 */
+
+/* 头部样式 */
+#header {
+	width: 100%;
+	height: 60px;
+	color: #ffffff;
+	background-color: #021E62;
+	overflow: hidden;
+}
+
+#header .logo {
+	width: 124px;
+	height: 60px;
+	float: left;
+	background: url(../images/logo.gif) no-repeat left center;
+}
+
+#header .title {
+	padding: 0 0 0 50px;
+	height: 60px;
+	line-height: 60px;
+	font-size: 19px;
+	font-weight: bold;
+	float: left;
+}
+
+#header .content {
+	height: 60px;
+	line-height: 60px;
+	font-size: 13px;
+	float: right;
+	padding-right: 10px
+}
+
+#header .content span {
+	height: 60px;
+	line-height: 60px;
+}
+
+#header .content select {
+	width: 200px;
+}
+
+/* 导航栏 */
+#nav {
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	color: #ffffff;
+	background-color: #999999;
+	padding: 0 0 0 10px;
+}
+
+#nav .navSeparator {
+	margin: 0 5px 0 5px;
+	font-family: 宋体, sans-serif;
+}
+
+#nav a {
+	color: #ffffff;
+}
+
+#bodyContainer {
+	width: 100%;
+	position: absolute;
+	top: 80px;
+	bottom: 0px;
+}
+
+#bodyContainer #menu {
+	width: 171px;
+	height: 100%;
+	float: left;
+}
+
+#bodyContainer #separator {
+	float: left;
+	width: 0;
+	height: 100%;
+	display: none;
+}
+
+#bodyContainer #mainContainer {
+	height: 100%;
+	float: left;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	left: 171px;
+	bottom: 0px;
+	overflow: hidden;
+}
+
+#bodyContainer #mainContainer div {
+	
+}
+
+#bodyContainer #mainContainer #mainHeader,#bodyContainer #mainContainer #mainNav {
+	margin: 0 0 5px 0;
+}
+
+#bodyContainer #mainContainer #mainBody {
+	overflow: auto;
+}
+
+#bodyContainer #mainContainer #mainContext {
+	
+}
+
+#bodyContainer #mainContainer #mainStatusBar {
+	width: 100%;
+	height: 0;
+	display: none;
+}
+
+#bodyContainer #mainContainer #mainFooter {
+	width: 100%;
+	height: 22px;
+	line-height: 22px;
+	position: absolute;
+	bottom: 0px;
+	color: #0f5faa;
+	background-color: #e5eefa;
+	vertical-align: middle;
+	overflow: hidden;
+}
+
+#bodyContainer #mainContainer #mainFooter input {
+	vertical-align: middle;
+}
+
+#bodyContainer #mainContainer #mainFooter #mainFooterLefter,#bodyContainer #mainContainer #mainFooter #mainFooterCenter
+	{
+	height: 100%;
+	margin: 0 10px;
+	text-align: left;
+	float: left;
+}
+
+#bodyContainer #mainContainer #mainFooter #mainFooterRighter {
+	height: 100%;
+	margin: 0 10px;
+	text-align: right;
+	float: right;
+}
+/* 分页信息 */
+#pagingEntity {
+	float: right;
+}
+#pagingEntity input,input.inputCount {
+	width: 30px;
+	margin: 0px;
+	padding: 1px;
+}
+
+#pagingEntity input {
+	height: 20px;
+}
+
+#pagingEntity input.go {
+	width: 20px;
+	height: 20px;
+	border: 0;
+	padding: 0;
+	color: #0f5faa;
+	text-align: center;
+	background: url(../images/button_go.gif);
+}
+
+#pagingEntity div {
+	float: left;
+}
+#pagingEntity .last {
+	margin-right: 3px;
+}
+#pagingEntity a {
+	width: 16px;
+	height: 22px;
+	display: block;
+}
+
+#pagingEntity .first a {
+	background: url(../images/page/page-first.gif) no-repeat center;
+}
+
+#pagingEntity .first a.disabled {
+	background: url(../images/page/page-first-disabled.gif) no-repeat center;
+}
+
+#pagingEntity .previous a {
+	background: url(../images/page/page-prev.gif) no-repeat center;
+}
+
+#pagingEntity .previous a.disabled {
+	background: url(../images/page/page-prev-disabled.gif) no-repeat center;
+}
+
+#pagingEntity .next a {
+	background: url(../images/page/page-next.gif) no-repeat center;
+}
+
+#pagingEntity .next a.disabled {
+	background: url(../images/page/page-next-disabled.gif) no-repeat center;
+}
+
+#pagingEntity .last a {
+	background: url(../images/page/page-last.gif) no-repeat center;
+}
+
+#pagingEntity .last a.disabled {
+	background: url(../images/page/page-last-disabled.gif) no-repeat center;
+}
+
+/* 底部隐藏footer */
+#footer {
+	position: absolute;
+	bottom: 0px;
+	display: none;
+}

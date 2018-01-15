@@ -1,0 +1,13 @@
+.add{
+    background-image: url(images/add.gif) !important;
+}
+.up{
+    background-image: url(images/upload.gif) !important;
+}
+
+.stop{
+    background-image: url(images/stop.gif) !important;
+}
+.delete{
+    background-image: url(images/delete.gif) !important;
+}

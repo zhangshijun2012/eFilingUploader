@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* 填写表单的table样式 */
+.nowrap td, table thead td, table thead th {
+	white-space: nowrap;
+}
+table.form, table.form table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+}
+
+table.form tbody td.internal {
+	padding: 0;
+	margin: 0;
+}
+
+table.form input.text, table.form select {
+	width: 99%;
+}
+table.form textarea {
+	width: 99%;
+	height: 60px;
+}
+
+table.form td, table.form tbody td {
+	border-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 20px;
+	padding: 2px 3px;
+	padding-right: 5px;
+}
+table.form tfoot td {
+	padding: 0;
+}
+table.form .title {
+	padding-left: 15px;
+	padding-right: 3px;
+	text-align: right;
+	white-space: nowrap;
+}
+table.form .actionBar {
+	padding-left: 20px;
+	text-align: center;
+}
+
+/* 列表样式 */
+table.list, table.list table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+}
+table.list input.text {
+	width: 100%;
+}
+table.list select {
+	width: 100%;
+}
+
+table.list td, table.list tbody td, table.list th {
+	border-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 21px;
+	padding: 2px 3px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+table.list .input td {
+	padding: 0;
+}
+
+table.list thead td, table.list th {
+	border-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 22px;
+	background: url(../images/list_header_bg.gif) repeat-x top;
+	border-top: 1px solid #aac0e4;
+	color: #416297;
+	text-align: center;
+	white-space: nowrap;
+}
+
+table.list tbody td {
+	background-color: #f7f7f7;
+	border: 1px solid #ffffff;
+}
+
+table.list tbody.whitebg td {
+	background-color: #ffffff;
+}
+
+table.list tbody .odd td {
+	background-color: #f7f7f7;
+	border: 1px solid #ffffff;
+}
+
+table.list tbody .even td {
+	background-color: #efefef;
+	border: 1px solid #ffffff;
+}
+
+table.list tbody .nothing {
+	text-align: center;
+	color: red;
+}
+
+table.list tbody td.internal {
+	padding: 0;
+	margin: 0;
+}
+
+/* 在必填输入框后显示* */
+.requiredValue, table.form td.requiredValue, table.form tbody td.requiredValue {
+	padding-right: 5px;
+	background: url(../images/required.gif) right center no-repeat; 
+}
+.emptyValue, table.form td.emptyValue, table.form tbody td.emptyValue {
+	padding-right: 5px;
+}

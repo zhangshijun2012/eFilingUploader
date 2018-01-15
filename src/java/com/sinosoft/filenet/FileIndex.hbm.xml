@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-7-25 11:42:04 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="com.sinosoft.filenet.FileIndex" table="t_file_index">
+        <id name="id" type="java.lang.String">
+            <column name="ID" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="batchNo" type="java.lang.String">
+            <column name="BATCH_NO" length="50" />
+        </property>
+        <property name="operator" type="java.lang.String">
+            <column name="OPERATOR" length="50" />
+        </property>
+        <property name="operateTime" type="timestamp">
+            <column name="OPERATE_TIME" length="19" not-null="true" />
+        </property>
+        <property name="fileId" type="java.lang.String">
+            <column name="FILE_ID" length="50" />
+        </property>
+        <property name="fileNo" type="java.lang.String">
+            <column name="FILE_NO" length="50" />
+        </property>
+        <property name="fileSize" type="long">
+            <column name="FILE_SIZE" not-null="true" />
+        </property>
+        <property name="fileTitle" type="java.lang.String">
+            <column name="FILE_TITLE" length="250" />
+        </property>
+        <property name="fileName" type="java.lang.String">
+            <column name="FILE_NAME" length="250" not-null="true" />
+        </property>
+        <property name="fileContentType" type="java.lang.String">
+            <column name="FILE_CONTENT_TYPE" length="200" />
+        </property>
+        <property name="fileCount" type="java.lang.Integer">
+            <column name="FILE_COUNT" not-null="true" />
+        </property>
+        <property name="pageCount" type="java.lang.Integer">
+            <column name="PAGE_COUNT" not-null="true" />
+        </property>
+        
+        <property name="systemCode" type="java.lang.String">
+            <column name="SYSTEM_CODE" length="50" />
+        </property>
+        <property name="businessNo" type="java.lang.String">
+            <column name="BUSINESS_NO" length="200" />
+        </property>
+        <property name="keywords" type="java.lang.String">
+            <column name="KEYWORDS" length="1000" />
+        </property>
+        <property name="property00" type="java.lang.String">
+            <column name="PROPERTY_00" length="200" />
+        </property>
+        <property name="property01" type="java.lang.String">
+            <column name="PROPERTY_01" length="200" />
+        </property>
+        <property name="property02" type="java.lang.String">
+            <column name="PROPERTY_02" length="200" />
+        </property>
+        <property name="property03" type="java.lang.String">
+            <column name="PROPERTY_03" length="200" />
+        </property>
+        <property name="property04" type="java.lang.String">
+            <column name="PROPERTY_04" length="200" />
+        </property>
+        <property name="property05" type="java.lang.String">
+            <column name="PROPERTY_05" length="200" />
+        </property>
+        <property name="property06" type="java.lang.String">
+            <column name="PROPERTY_06" length="200" />
+        </property>
+        <property name="property07" type="java.lang.String">
+            <column name="PROPERTY_07" length="200" />
+        </property>
+        <property name="property08" type="java.lang.String">
+            <column name="PROPERTY_08" length="200" />
+        </property>
+        <property name="property09" type="java.lang.String">
+            <column name="PROPERTY_09" length="200" />
+        </property>
+        <property name="property10" type="java.lang.Long">
+            <column name="PROPERTY_10" />
+        </property>
+        <property name="property11" type="java.lang.Long">
+            <column name="PROPERTY_11" />
+        </property>
+        <property name="property12" type="java.lang.Long">
+            <column name="PROPERTY_12" />
+        </property>
+        <property name="property13" type="java.lang.Long">
+            <column name="PROPERTY_13" />
+        </property>
+        <property name="property14" type="java.lang.Long">
+            <column name="PROPERTY_14" />
+        </property>
+        <property name="property15" type="java.lang.Long">
+            <column name="PROPERTY_15" />
+        </property>
+        <property name="text" type="java.lang.String">
+            <column name="TEXT" length="3000" />
+        </property>
+    </class>
+</hibernate-mapping>

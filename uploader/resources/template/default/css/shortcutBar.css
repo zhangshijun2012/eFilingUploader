@@ -1,0 +1,130 @@
+
+/*------------- 一些快捷按钮的样式 ----------------*/
+.shortcutBar { /* 快捷按钮栏 */
+	float: right;
+}
+
+.shortcutBar ul {
+	margin: 0;
+	padding: 0;
+}
+.shortcutBar li {
+	width: 15px;
+	height: 15px;
+	/*line-height: 15px;*/
+	margin-left: 1px;
+	padding-top: 0px;
+	/* display: inline; */
+	overflow: hidden;
+	float: left;
+}
+
+.shortcutBar a { /* 快捷按钮样式 */
+	width: 15px;
+	height: 15px;
+	display: block;
+	overflow: hidden;
+	color: #FFFFFF;
+}
+.shortcutBar a:hover {
+	color: #ff3333;
+}
+.shortcutBar .printButton a { /* 打印按钮 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -315px;
+}
+
+.shortcutBar .printButton a:hover { /* 打印按钮 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -315px;
+}
+
+.shortcutBar .refreshButton a { /* 刷新按钮 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -225px;
+}
+
+.shortcutBar .refreshButton a:hover { /* 刷新按钮 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -225px;
+}
+
+.shortcutBar .maximize a { /* 最大化 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -30px;
+}
+
+.shortcutBar .maximize a:hover { /* 最大化 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -30px;
+}
+
+.shortcutBar .normalization a { /* 还原 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -45px;
+}
+
+.shortcutBar .normalization a:hover { /* 还原 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -45px;
+}
+
+.shortcutBar .helpButton a,.shortcutBar .helpButton a { /* 帮助 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -300px;
+}
+
+.shortcutBar .helpButton a:hover,.shortcutBar .helpButton a:hover { /* 帮助 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -300px;
+}
+
+.shortcutBar .closeButton a { /* 关闭 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px 0px;
+}
+
+.shortcutBar .closeButton a:hover { /* 关闭 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px 0px;
+}
+
+.shortcutBar .leftArrowButton a { /* 左箭头 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -105px;
+}
+
+.shortcutBar .leftArrowButton a:hover { /* 左箭头 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -105px;
+}
+
+.shortcutBar .rightArrowButton a { /* 右箭头 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -120px;
+}
+
+.shortcutBar .rightArrowButton a:hover { /* 右箭头 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -120px;
+}
+
+.shortcutBar .minusButton a { /* 减号 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -255px;
+}
+
+.shortcutBar .minusButton a:hover { /* 减号 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -255px;
+}
+
+.shortcutBar .plusButton a { /* 减号 */
+	background: url(../images/tool-sprites.gif) no-repeat 0px -240px;
+}
+
+.shortcutBar .plusButton a:hover { /* 减号 */
+	background: url(../images/tool-sprites.gif) no-repeat -15px -240px;
+}
+
+
+.shortcutBar .settingButton a {
+	background: url(../images/tool-sprites.gif) no-repeat 0px -90px;
+}
+
+.shortcutBar .settingButton a:hover {
+	background: url(../images/tool-sprites.gif) no-repeat -15px -90px;
+}
+
+.shortcutBar .homepageButton {
+	width: 80px;
+	margin-left: 1px;
+	overflow: hidden;
+	float: left;
+}
+.shortcutBar .homepageButton a {
+	padding: 1px 0 0 18px;
+	background: url(../images/home.gif) no-repeat 0px -1px;
+}

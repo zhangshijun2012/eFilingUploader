@@ -1,0 +1,103 @@
+#bodyContainer #menu {
+	width: 170px;
+	background-color: #e9efef;
+	border-right: 1px solid #9db0b2;
+	overflow: hidden;
+}
+#menu div {
+	width: 500px;
+	font-size: 12px;
+	/*overflow: hidden;*/
+}
+
+#menu .menuBody {
+	line-height: 20px;
+}
+
+#menu .expanded .menuBody {
+	display:;
+}
+
+#menu .collapsed .menuBody {
+	display: none;
+}
+
+#menu .menuHeader a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+/* 1级菜单 */
+#menu .menuHeader {
+	height: 24px;
+	line-height: 24px;
+	text-indent: 22px;
+	color: #0a346a;
+	cursor: pointer;
+	background: url(../images/menu_header_bg.gif) no-repeat left center;
+	border-bottom: 1px solid #9db0b2
+}
+#menu .menuHeader a {
+	color: #0a346a;
+}
+#menu .current .menuHeader a {
+	/* color: red; */
+	font-weight: bold;
+}
+/* 2级菜单 */
+#menu .menuBody .menuHeader {
+	height: 22px;
+	line-height: 22px;
+	text-indent: 28px;
+	color: #ffffff;
+	border-bottom: 1px solid #d8e2f0;
+	background: url(../images/menu_lv2_bg.gif) no-repeat left center;
+	background-position-x: 15px;
+	background-color: #93a8c4;
+}
+
+#menu .menuBody .menuHeader a {
+	color: #ffffff;
+}
+#menu .menuBody .current .menuHeader a {
+	/* color: red; */
+	font-weight: bold;
+}
+
+/* 3级菜单 */
+#menu .menuBody .menuBody .menuHeader {
+	height: 20px;
+	line-height: 20px;
+	text-indent: 35px;
+	color: #1b4e8f;
+	background: url(../images/menu_lv3_bg.gif) no-repeat left center;
+	background-position: 23px 50%;
+	background-color: #e6e6e6;
+	border-bottom: 0;
+}
+#menu .menuBody .menuBody .menuHeader a {
+	color: #1b4e8f;
+}
+#menu .menuBody .menuBody .current .menuHeader a {
+	/* color: red; */
+	font-weight: bold;
+}
+
+/* 4级菜单 */
+#menu .menuBody .menuBody .menuBody .menuHeader {
+	height: 20px;
+	line-height: 20px;
+	text-indent: 42px;
+	color: #6c82a0;
+	background: url(../images/menu_lv4_bg.gif) no-repeat left center;
+	background-position: 31px 50%;
+	background-color: #ffffff;
+	border-bottom: 0;
+}
+#menu .menuBody .menuBody .menuBody .menuHeader a {
+	color: #6c82a0;
+}
+#menu .menuBody .menuBody .menuBody .current .menuHeader a {
+	/* color: red; */
+	font-weight: bold;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.UserGradeTask" table="UTIUSERGRADETASK">
+        <composite-id name="id" class="com.sinosoft.efiling.hibernate.entity.UserGradeTaskId">
+            <key-property name="comCode" type="string">
+                <column name="COMCODE" length="8" />
+            </key-property>
+            <key-property name="userCode" type="string">
+                <column name="USERCODE" length="10" />
+            </key-property>
+            <key-property name="gradeCode" type="string">
+                <column name="GRADECODE" length="3" />
+            </key-property>
+            <key-property name="taskCode" type="string">
+                <column name="TASKCODE" length="60" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="userGrade" class="com.sinosoft.efiling.hibernate.entity.UserGrade" update="false" insert="false" fetch="select">
+            <column name="COMCODE" length="8" not-null="true" />
+            <column name="USERCODE" length="10" not-null="true" />
+            <column name="GRADECODE" length="3" not-null="true" />
+        </many-to-one>
+        <many-to-one name="task" class="com.sinosoft.efiling.hibernate.entity.Task" update="false" insert="false" fetch="select">
+            <column name="TASKCODE" length="60" not-null="true" />
+        </many-to-one>
+        <property name="grantLevel" type="string">
+            <column name="GRANTLEVEL" length="1" />
+        </property>
+        <property name="grantValue" type="string">
+            <column name="GRANTVALUE" length="1" />
+        </property>
+        <property name="value" type="string">
+            <column name="VALUE" length="1" not-null="true" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+    </class>
+</hibernate-mapping>

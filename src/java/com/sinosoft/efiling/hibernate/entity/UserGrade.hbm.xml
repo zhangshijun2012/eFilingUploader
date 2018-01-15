@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.UserGrade" table="UTIUSERGRADE">
+        <composite-id name="id" class="com.sinosoft.efiling.hibernate.entity.UserGradeId">
+            <key-property name="comCode" type="string">
+                <column name="COMCODE" length="8" />
+            </key-property>
+            <key-property name="userCode" type="string">
+                <column name="USERCODE" length="10" />
+            </key-property>
+            <key-property name="gradeCode" type="string">
+                <column name="GRADECODE" length="3" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="company" class="com.sinosoft.efiling.hibernate.entity.Company" update="false" insert="false" fetch="select">
+            <column name="COMCODE" length="8" not-null="true" />
+        </many-to-one>
+        <many-to-one name="grade" class="com.sinosoft.efiling.hibernate.entity.Grade" update="false" insert="false" fetch="select">
+            <column name="GRADECODE" length="3" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="com.sinosoft.efiling.hibernate.entity.User" update="false" insert="false" fetch="select">
+            <column name="USERCODE" length="10" not-null="true" />
+        </many-to-one>
+        <property name="invalidDate" type="timestamp">
+            <column name="INVALIDDATE" length="7" />
+        </property>
+        <property name="validStatus" type="string">
+            <column name="VALIDSTATUS" length="1" not-null="true" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+        <set name="userGradePowers" table="UTIUSERGRADEPOWER" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="COMCODE" length="8" not-null="true" />
+                <column name="USERCODE" length="10" not-null="true" />
+                <column name="GRADECODE" length="3" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.UserGradePower" />
+        </set>
+        <set name="userGradeTasks" table="UTIUSERGRADETASK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="COMCODE" length="8" not-null="true" />
+                <column name="USERCODE" length="10" not-null="true" />
+                <column name="GRADECODE" length="3" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.UserGradeTask" />
+        </set>
+    </class>
+</hibernate-mapping>

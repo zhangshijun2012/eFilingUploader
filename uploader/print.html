@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>打印预览</title>
+<link type="text/css" rel="stylesheet" href="resources/template/default/css/default.css">
+<link type="text/css" rel="stylesheet" href="resources/template/default/css/layout.css">
+<link type="text/css" rel="stylesheet" href="resources/template/default/css/menu.css">
+<link type="text/css" rel="stylesheet" href="resources/template/default/css/table.css">
+<link type="text/css" rel="stylesheet" href="resources/template/default/css/dialog.css">
+<link type="text/css" rel="stylesheet" href="resources/template/default/css/shortcutBar.css">
+<style type="text/css">
+table.minHeight td,table.minHeight tbody td {
+	height: auto;
+}
+
+table.minHeight thead td,table.minHeight thead th {
+	height: auto;
+	padding: 3px;
+}
+</style>
+<script type="text/javascript">
+	var init = function() {
+		var win = opener || parent;
+		document.getElementById('printContainer').innerHTML = win.printContent;
+		if (win.printOnload) {
+			win.printOnload(window);
+		}
+		window.print();
+	}
+</script>
+
+</head>
+<body onload="init()">
+<div id="printContainer"></div>
+</body>
+</html>

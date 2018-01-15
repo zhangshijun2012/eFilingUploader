@@ -1,0 +1,213 @@
+
+/* 日历控件样式 */
+.calendar-dialog {
+	background: #ffffff;
+	position: absolute;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding: 1px 3px 3px 3px;
+	width: 180px;
+	overflow: hidden;
+	border: 1px solid #cccccc;
+	/* 添加阴影的效果 */
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-webkit-box-shadow: 0 0 3px #aaaaaa;
+	-moz-box-shadow: 0 0 3px #aaaaaa;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Color='#dddddd', Direction='135', Strength='2');
+}
+
+.calendar-dialog .header {
+	width: 100%;
+	height: 22px;
+	line-height: 15px;
+	overflow: hidden;
+}
+
+.calendar-dialog .header input {
+	margin: 0;
+	padding: 0;
+}
+.calendar-dialog .container {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.calendar-dialog .header .floatLeft {
+	padding-top: 2px;
+}
+.calendar-dialog .header .floatRight {
+	padding-top: 3px;
+	height: 18px;
+	line-height: 18px;
+}
+
+.calendar-dialog .header ul li {
+	/*height: 18px;*/
+}
+
+.calendar-dialog .separator, .footer span span {
+	margin: 0 2px 0 2px;
+}
+
+.calendar-dialog .jtable td {
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	height: 17px;
+	line-height: 17px;
+}
+
+.calendar-dialog .jtable tbody td {
+	cursor: pointer;
+}
+
+.calendar-dialog .sunday {
+	color: #ff3333;
+}
+
+.calendar-dialog .saturday {
+	color: #ff5555;
+}
+
+.calendar-dialog .anotherMonth {
+	color: gray;
+}
+
+.calendar-dialog .mouserover {
+	background: #D0ECFE;
+}
+
+.calendar-dialog .today {
+	background: #D0ECFE;
+	color: #ff0000;
+	font-weight: bold;
+}
+
+.calendar-dialog .current {
+	background: #D0ECFE;
+}
+
+.calendar-dialog .footer {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	width: 100%;
+	height: 22px;
+	line-height: 15px;
+	overflow: hidden;
+	padding-top: 3px;
+}
+
+.calendar-dialog .footer input {
+	margin: 0;
+	padding: 0;
+	width: 20px;
+	height: 16px;
+	line-height: 12px;
+}
+
+.calendar-dialog iframe {
+	position: absolute;
+	visibility: inherit;
+	top: 0px;
+	left: 0px;;
+	z-index: -1;
+}
+
+/**
+ *	-----------------------------------------------------------------------------
+ *	------------------------------- jtable样式表 --------------------------------
+ *	-----------------------------------------------------------------------------
+ *	-----------------------------------------------------------------------------
+ */ /*------------------------------- table基本样式 ----------------------------*/
+.jtable {
+	width: 100%;
+	border-collapse: collapse;  /* collapse 相邻边被合并 */ /*separate; 默认值。边框独立(标准HTML) */
+	border-spacing: 0;
+	empty-cells: show;
+}
+
+.jtable td,.jtable th {
+	padding: 1px 2px 1px 2px;
+	vertical-align: middle; /* 垂直居中 */
+	border: #ccc 1px solid; /* 边框 */
+	height: 20px;
+	line-height: 20px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.jtable .noPadding td,.jtable .noPadding th {
+	padding: 0;
+}
+
+.jtable .noVerticalPadding td,.jtable .noVerticalPadding th {
+	padding: 0 1px 0 1px;
+}
+
+.jtable thead th,.jtable thead td,.jtable .thead td {
+	border-bottom: #8ea0a9 1px solid; /* 覆盖底边框样式 */
+	padding: 2px 2px 2px 2px;
+	font-size: 13px;
+	background: #e4eaec;
+	color: #1e5204;
+	text-align: center;
+	white-space: nowrap;
+}
+
+/* 偶数的样式 */
+.jtable .even,.jtable .even td {
+	background: #f7f7f7;
+}
+
+.jtable tfoot td,.jtable .tfoot td {
+	border: 0; /*清除边框*/
+}
+
+/* jtable中的文本框样式 */
+.jtable input,.jtable select {
+	width: 100%;
+	height: 18px;
+	line-height: 14px;
+}
+
+/* jtable中的文本域样式 */
+.jtable textarea {
+	width: 100%;
+	height: 60px;
+}
+
+/* jtable中的多选/单选/按钮样式 */
+.jtable .checkbox {
+	width: auto !important;
+	width: 12px;
+}
+
+.jtable .radio {
+	width: auto !important;
+	width: 12px;
+}
+
+.jtable .button {
+	width: auto;
+	height: 22px;
+}
+
+/* 超链接样式 */
+.jtable thead a {
+	color: #1e5204;
+}
+
+.jtable tbody td a,.jtable tfoot td a,.jtable .clear a {
+	color: #686daf;
+	text-decoration: underline;
+}
+
+.jtable td a:hover,.jtable tbody td a:hover,.jtable tfoot td a:hover,.jtable .clear a:hover {
+	color: #dd3333;
+	text-decoration: none;
+}

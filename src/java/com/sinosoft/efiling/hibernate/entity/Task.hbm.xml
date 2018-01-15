@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.Task" table="UTITASK">
+        <id name="id" type="string">
+            <column name="TASKCODE" length="60" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="parent" class="com.sinosoft.efiling.hibernate.entity.Task" fetch="select">
+            <column name="PARENTCODE" length="60" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="TASKNAME" length="60" not-null="true" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+        <property name="taskEName" type="string">
+            <column name="TASKENAME" length="60" />
+        </property>
+        <set name="children" table="UTITASK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PARENTCODE" length="60" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.Task" />
+        </set>
+        <set name="menus" table="UTIMENU" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TASKCODE" length="60" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.Menu" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.Menu" table="UTIMENU">
+        <id name="id" type="string">
+            <column name="MENUID" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="parent" class="com.sinosoft.efiling.hibernate.entity.Menu" fetch="select" insert="false" update="false">
+            <column name="UPPERMENUID" length="20" not-null="true" />
+        </many-to-one>
+        <many-to-one name="task" class="com.sinosoft.efiling.hibernate.entity.Task" fetch="select">
+            <column name="TASKCODE" length="60" />
+        </many-to-one>
+        <property name="menuLevel" type="long">
+            <column name="MENULEVEL" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="systemCode" type="string">
+            <column name="SYSTEMCODE" length="20" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="MENUCNAME" length="100" />
+        </property>
+        <property name="menuEName" type="string">
+            <column name="MENUENAME" length="100" />
+        </property>
+        <property name="url" type="string">
+            <column name="URL" length="200" />
+        </property>
+        <property name="target" type="string">
+            <column name="TARGET" length="30" />
+        </property>
+        <property name="displayNo" type="long">
+            <column name="DISPLAYNO" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="image" type="string">
+            <column name="IMAGE" length="120" />
+        </property>
+        <property name="imageExpand" type="string">
+            <column name="IMAGEEXPAND" length="120" />
+        </property>
+        <property name="imageCollapse" type="string">
+            <column name="IMAGECOLLAPSE" length="120" />
+        </property>
+        <property name="iconExpand" type="string">
+            <column name="ICONEXPAND" length="120" />
+        </property>
+        <property name="iconCollapse" type="string">
+            <column name="ICONCOLLAPSE" length="120" />
+        </property>
+        <property name="validStatus" type="string">
+            <column name="VALIDSTATUS" length="1" not-null="true" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+        <property name="permitRiskClass" type="string">
+            <column name="PERMITRISKCLASS" />
+        </property>
+        <property name="exceptRiskCode" type="string">
+            <column name="EXCEPTRISKCODE" />
+        </property>
+        <property name="exceptRiskClass" type="string">
+            <column name="EXCEPTRISKCLASS" />
+        </property>
+        <property name="permitRiskCode" type="string">
+            <column name="PERMITRISKCODE" />
+        </property>
+        <property name="checkClass" type="string">
+            <column name="CHECKCLASS" />
+        </property>
+        <set name="children" table="UTIMENU" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UPPERMENUID" length="20" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.Menu" />
+        </set>
+    </class>
+</hibernate-mapping>

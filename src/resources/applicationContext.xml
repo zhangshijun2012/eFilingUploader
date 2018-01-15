@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans 
+	PUBLIC "-//SPRING//DTD BEAN 3.0//EN" 
+	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+	<!-- 指定配置文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:hibernate.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置数据源  -->
+	<!-- 
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@10.132.1.46:1521:EVTFS" />
+		<property name="username" value="prod" />
+		<property name="password" value="prodprod" />
+	</bean>
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@10.132.3.42:1521:CISTEST" />
+		<property name="username" value="drtest" />
+		<property name="password" value="Liberty13" />
+	</bean>
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"><value>${hibernate.dataSource.jndiName}</value></property>
+	</bean>
+	-->
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"><value>${hibernate.dataSource.jndiName}</value></property>
+	</bean>
+	 
+	<!-- 配置sessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<!-- hiberntae映射文件,可使用通配符* -->
+		<!-- <property name="mappingLocations">
+			<list>
+				<value>classpath*:/com/ronglian/uec_cloud/**/bo/*.hbm.xml</value>
+				<value>classpath*:/entity/xml/*.hbm.xml</value>
+			</list>
+		</property> -->
+		
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:/com/sinosoft/efiling/hibernate/entity/</value>
+				<value>classpath:/com/sinosoft/filenet/</value>
+			</list>
+		</property>
+		
+		<!-- 配置hibernate属性 -->		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!-- <prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop> -->
+				<!-- <prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop> -->
+			</props>
+		</property>
+		
+	</bean>
+	
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- 使用拦截器配置事务 -->
+	<!-- 一般仅为service类配置事务，Dao类中的每个方法均视为原子操作，不再配置事务 -->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="transactionManager" />  
+		<!-- 配置事务属性 -->  
+		<property name="transactionAttributes">  
+			<props>
+				<!-- 嵌套事务 -->
+				<prop key="*Nested">PROPAGATION_NESTED</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="get">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="modify*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="remove*">PROPAGATION_REQUIRED</prop>
+				<prop key="getValidFileBox">PROPAGATION_REQUIRED</prop>
+				<prop key="*Transaction">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>  
+    </bean>
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<!-- 要配置事务的类 -->
+				<value>*Service</value>
+				<value>*Transaction</value>
+			</list>
+		</property>
+		
+		<!-- 此属性指定目标类本省是否是代理的对象，如果目标类没有实现任何类，就设为true代表自己, 防止没有接口导致的错误 -->
+		<property name="proxyTargetClass" value="true" />
+		<property name="interceptorNames">
+			<list>
+				<!-- 要使用的拦截器 -->
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	
+	<!-- 配置DAO -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>	
+	<bean id="entityDao" class="com.sinosoft.util.hibernate.dao.EntityDaoSupport" abstract="true">
+		<property name="hibernateTemplate">
+			<ref local="hibernateTemplate" />
+		</property>
+	</bean>	
+	<!-- 配置service -->
+	<bean id="serviceSupport" abstract="true">
+		<property name="userDao"><ref local="userDao" /></property>
+		<property name="companyDao"><ref local="companyDao" /></property>
+	</bean>
+	<!-- 配置action -->
+	<!-- scope="prototype"为每一个请求都新建一个实例.与struts2整合时action不能使用默认的值. -->
+	<bean id="actionSupport" abstract="true" scope="prototype">
+		<property name="userService"><ref local="userService" /></property>
+		<property name="companyService"><ref local="companyService" /></property>
+	</bean>
+	
+	<!-- 配置dao -->
+	<bean id="companyDao" class="com.sinosoft.efiling.hibernate.dao.CompanyDao" parent="entityDao"></bean>
+	<bean id="gradeDao" class="com.sinosoft.efiling.hibernate.dao.GradeDao" parent="entityDao"></bean>
+	<bean id="gradeTaskDao" class="com.sinosoft.efiling.hibernate.dao.GradeTaskDao" parent="entityDao"></bean>
+	<bean id="menuDao" class="com.sinosoft.efiling.hibernate.dao.MenuDao" parent="entityDao"></bean>
+	<bean id="taskDao" class="com.sinosoft.efiling.hibernate.dao.TaskDao" parent="entityDao"></bean>
+	<bean id="userDao" class="com.sinosoft.efiling.hibernate.dao.UserDao" parent="entityDao"></bean>
+	<bean id="userGradeDao" class="com.sinosoft.efiling.hibernate.dao.UserGradeDao" parent="entityDao"></bean>
+	<bean id="userGradePowerDao" class="com.sinosoft.efiling.hibernate.dao.UserGradePowerDao" parent="entityDao"></bean>
+	<bean id="userGradeTaskDao" class="com.sinosoft.efiling.hibernate.dao.UserGradeTaskDao" parent="entityDao"></bean>
+	<bean id="configureDao" class="com.sinosoft.efiling.hibernate.dao.ConfigureDao" parent="entityDao"></bean>
+	
+ 
+	<!-- 产品线 -->
+	<bean id="companyService" class="com.sinosoft.efiling.service.CompanyService" parent="serviceSupport">
+		<property name="dao"><ref local="companyDao" /></property>
+	</bean>
+	
+	<bean id="userService" class="com.sinosoft.efiling.service.UserService" parent="serviceSupport">
+		<property name="dao"><ref local="userDao" /></property>
+		<property name="companyDao"><ref local="companyDao" /></property>
+		<property name="gradeDao"><ref local="gradeDao" /></property>
+		<property name="gradeTaskDao"><ref local="gradeTaskDao" /></property>
+		<property name="menuDao"><ref local="menuDao" /></property>
+		<property name="taskDao"><ref local="taskDao" /></property>
+		<property name="userGradeDao"><ref local="userGradeDao" /></property>
+		<property name="userGradePowerDao"><ref local="userGradePowerDao" /></property>
+		<property name="userGradeTaskDao"><ref local="userGradeTaskDao" /></property>
+	</bean>
+	<bean id="userAction" class="com.sinosoft.efiling.struts2.action.UserAction" parent="actionSupport">
+		<property name="service">
+			<ref local="userService" />
+		</property>
+	</bean>
+	
+	<!-- 其他系统调用eFiling系统接口的一个域校验类 -->
+	<bean id="fileSystemDao" class="com.sinosoft.filenet.FileSystemDao" parent="entityDao"></bean>
+	
+	<bean id="fileSystemService" class="com.sinosoft.filenet.FileSystemService" parent="serviceSupport">
+		<property name="dao"><ref local="fileSystemDao" /></property>
+	</bean>
+	<bean id="fileSystemAction" class="com.sinosoft.filenet.FileSystemAction" parent="actionSupport">
+		<property name="service">
+			<ref local="fileSystemService" />
+		</property>
+	</bean>
+	
+	<!-- 文件操作 -->
+	<bean id="fileIndexDao" class="com.sinosoft.filenet.FileIndexDao" parent="entityDao"></bean>
+	<bean id="fileIndexService" class="com.sinosoft.filenet.FileIndexService" parent="serviceSupport">
+		<property name="dao"><ref local="fileIndexDao" /></property>
+		<property name="configureDao"><ref local="configureDao" /></property>
+		<property name="fileSystemService"><ref local="fileSystemService" /></property>
+	</bean>
+	<bean id="fileIndexAction" class="com.sinosoft.filenet.FileIndexAction" parent="actionSupport">		
+		<property name="service">
+			<ref local="fileIndexService" />
+		</property>
+	</bean>
+</beans>

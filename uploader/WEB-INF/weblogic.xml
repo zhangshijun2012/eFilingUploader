@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE weblogic-web-app PUBLIC 
+	"-//BEA Systems, Inc.//DTD Web Application 8.1//EN"
+	"http://www.bea.com/servers/wls810/dtd/weblogic810-web-jar.dtd" >
+<weblogic-web-app>
+	<session-descriptor>
+		<session-param>
+			<param-name>CookieName</param-name>
+			<param-value>eFilingUploaderSessionId</param-value>
+		</session-param>
+	</session-descriptor>
+	<jsp-descriptor>
+		<jsp-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>workingDir</param-name>
+			<param-value>./eFilingUploader_workingDir</param-value>
+		</jsp-param>
+		<jsp-param>
+			<param-name>keepgenerated</param-name>
+			<param-value>true</param-value>
+		</jsp-param>
+	</jsp-descriptor>
+
+	<container-descriptor>
+		<!-- 优先加载项目中的lib -->
+		<prefer-web-inf-classes>true</prefer-web-inf-classes>
+	</container-descriptor>
+
+	<charset-params>
+		<input-charset>
+			<resource-path>/*</resource-path>
+			<java-charset-name>UTF-8</java-charset-name>
+		</input-charset>
+	</charset-params>
+
+	<context-root>uploader</context-root>
+</weblogic-web-app>

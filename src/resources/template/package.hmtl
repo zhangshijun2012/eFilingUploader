@@ -1,0 +1,8 @@
+<head>
+<head>
+<title>template</title>
+</head>
+<body>
+	<p>struts2在标签输出文字时的模板目录,由struts.ui.templateDir指定。下面的目录名就是模板名，由struts.ui.theme指定</p>
+</body>
+</head>

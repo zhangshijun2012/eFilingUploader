@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文件上传</title>
+	<link href="resources/ext/resources/css/ext-all.css" type="text/css" rel="stylesheet" />
+	<link href="style/common.css" type="text/css" rel="stylesheet"  />
+	<link href="resources/template/default/css/uploader.css" type="text/css" rel="stylesheet" />
+	
+	<script type="text/javascript" src="resources/javascript/base.js"></script>
+	<script type="text/javascript" src="resources/javascript/Math.uuid.js"></script>
+	
+	<script type="text/javascript" src="resources/ext/ext-base.js"></script>
+	<script type="text/javascript" src="resources/ext/ext-all.js"></script>
+	
+	<script type="text/javascript" src="resources/ux/uploader/swfupload.js"></script>
+  	<script type="text/javascript" src="resources/ux/uploader/uploaderPanel.js"></script>
+	
+	<script type="text/javascript" src="resources/helper.js"></script>	
+	<script type="text/javascript" src="resources/FileIndexService.js"></script>
+	
+	<script type="text/javascript">
+		Ext.Ajax.timeout = 5 * 60000;	// 5分钟 
+		Ext.BLANK_IMAGE_URL = SERVER_ROOT + "resources/template/default/images/s.gif";  // 空白图片
+		var UPLOAD_URL = FileIndexService.URL_UPLOAD;	// "uploader/upload.do";
+		var SAVE_URL = FileIndexService.URL_SAVE;		// "uploader/save.do";
+		var PARAMETERS;
+		var UPLOAD_QUERY_STRING	= "";	// FLASH控件对中文处理有BUG,后台无法正常接收中文
+
+		var onUploadComplete;	// 三个回调函数都有3个参数,json,xhq,success
+		var onUploadSuccess;
+		var onUploadFailure;
+		var SHOW = false;		// 是否使用show方法查看已上传的文件
+		var SHOW_PARAMETERS = { };	// SHOW方法时使用的参数,如果没有中文,应当是与PARAMETERS一致的
+		var IMAGES_CONTAINER = 'images';	// 显示所有图片预览的元素
+		(function(){
+			var parameters = { };
+			// alert(parent.getParameters);
+			if (parent.getParameters) parameters = parent.getParameters() || { };
+			var queryString = window.location.search;
+			/** 得到所有参数 */
+			function getParameters() {
+				c = queryString.charAt(0);
+				while (c == '?' || c == '#') {
+					queryString = queryString.substring(1);
+					if (!queryString) break;
+					c = queryString.charAt(0);
+				}
+				// alert(queryString + 'parameters=' + parameters)
+				if (!queryString) return parameters;
+				var params = queryString.split('&');
+				for ( var i = 0, l = params.length; i < l; i++) {
+					if (!params[i]) continue;
+					var values = params[i].split('=');
+					var key = decodeURIComponent(values[0]);
+					var value = decodeURIComponent(values[1] || '');
+					// alert(values + '/' + key + '=' + value);
+					//var key = (values[0]);
+					//var value = (values[1] || '');
+					//alert(values + '/' + key + '=' + value);
+					if (!parameters[key]) parameters[key] = [ value ];
+					else parameters[key].push(value);
+					// alert(parameters[key] + ' ' + parameters['batch'] + ' ' + getParameter('batch') );
+				}
+				// alert('parameters=' + parameters)
+				return parameters;
+			}
+
+			PARAMETERS = getParameters();
+			
+			if (!parameters['password']) {
+				// 没有传入密码参数，需要使用单点登陆
+				// alert(FileIndexService.namespace);
+				window.location = SERVER_ROOT + 'login.html?url=' + encodeURIComponent(FileIndexService.namespace) + '&password=false&' + queryString;
+				return;
+			}
+	
+			/** 得到key参数的值 */
+			function getParameter(key) {
+				var values = parameters[key];
+				if (typeof values == 'String' || typeof values == 'string') return values || '';
+				return values ? values[0] : '';
+			}
+			
+			if (!PARAMETERS['batch']) {
+				PARAMETERS['batch'] = Math.uuid();
+			}
+			function evalFunction(key) {
+				var fn = getParameter(key);
+				if (!fn) return null;
+				fn = new Function('json', 'xhq', 'success', fn);
+				delete PARAMETERS[key];
+				return fn;
+			}
+			
+			onUploadComplete = evalFunction('onComplete');
+			onUploadSuccess = evalFunction('onSuccess');
+			onUploadFailure = evalFunction('onFailure');
+			
+			if (PARAMETERS['maxResults']) {
+				FileIndexService.maxResults = Number.intValue(PARAMETERS['maxResults']) || FileIndexService.maxResults;
+				delete PARAMETERS['maxResults'];
+			}
+			SHOW = Boolean.parseBoolean(PARAMETERS['show']);
+			UPLOADER_WINDOW_SHOW = Object.isUndefined(PARAMETERS['showUploader']) || Boolean.parseBoolean(PARAMETERS['showUploader']);
+			if (SHOW) {
+				var _onUploadSuccess = onUploadSuccess;
+				onUploadSuccess = function(json, xhq, success) {
+					if (_onUploadSuccess) _onUploadSuccess(json, xhq, success);
+					
+					// 显示结果
+					FileIndexService.list(IMAGES_CONTAINER, json['list'], { insert: true });
+				}
+			}
+			// 需要加前缀的代码
+			var entityProperties = ["batchNo", "operator", "operateTime", "fileId", "fileNo", "fileSize", "fileTitle", "fileName",
+				"fileContentType", "fileCount", "pageCount",
+				"systemCode", "businessNo", "keywords", "property00", "property01", "property02", "property03",
+				"property04", "property05", "property06", "property07", "property08", "property09", "property10",
+				"property11", "property12", "property13", "property14", "property15", "text"];
+			/** p字段是否需要转换 */
+			var include = function(p) {
+				for (var i = 0, l = entityProperties.length; i < l; i++) {
+					if (entityProperties[i] == p) return true;
+				}
+				return false;
+			}
+			
+			var actionProperties = [ 'systemCode', 'password' ];	// action要保留的参数
+			var json = { };
+			for (var p in PARAMETERS) {
+				if (!PARAMETERS[p]) continue;	// 视为没有此参数
+				SHOW_PARAMETERS[p] = PARAMETERS[p];
+				if (include(p)) json['entity.' + p] = PARAMETERS[p];
+				else json[p] = PARAMETERS[p];
+				
+				for (var i = 0, l = actionProperties.length; i < l; i++) {
+					if (p == actionProperties[i]) {
+						json[p] = PARAMETERS[p];
+					}
+				}
+			}
+			PARAMETERS = json;
+			for (var p in PARAMETERS) {
+				var key = encodeURIComponent(p);
+				var values = PARAMETERS[p];
+				// alert(key + ' = ' + values + ' ' + typeof values);
+				if (typeof values == 'String' || typeof values == 'string') values = [ values ];
+				
+				var l = values.length;
+				var flag = (key == p); // && l == 1;	// 数组参数也通过queryString传递
+				var queryString = '';
+				for (var i = 0; i < l; i++) {
+					var value = encodeURIComponent(values[i]);
+					flag = flag && (value == values[i]);
+					if (value) queryString += ('&' + key + '=' + value);
+				}
+				// qqq += queryString;
+				
+				if (!flag) {	// 包含中文等特殊字符
+					UPLOAD_QUERY_STRING += queryString;
+					delete PARAMETERS[p];	// 在PARAMETERS中删除
+				}
+			}
+			
+			if (UPLOAD_QUERY_STRING) UPLOAD_QUERY_STRING = '?' + UPLOAD_QUERY_STRING.substring(1);
+	
+			UPLOAD_URL += UPLOAD_QUERY_STRING;
+			SAVE_URL += UPLOAD_QUERY_STRING;
+			
+			// alert(UPLOAD_URL);
+			// alert(SAVE_URL);
+			// alert(onUploadSuccess);
+				
+			var downloadDisabled = getParameter('downloadDisabled') || getParameter('FileIndexService.downloadDisabled');
+			if (downloadDisabled) {
+				// 有此参数,根据此参数判断是否禁用下载功能
+				downloadDisabled = Boolean.parseBoolean(downloadDisabled);
+				FileIndexService.downloadDisabled = downloadDisabled;
+			}
+		})();
+
+		function init() {
+			if (!PARAMETERS['entity.systemCode'] || !PARAMETERS['entity.businessNo']) {
+				alert('你没有指定systemCode或businessNo参数,请指定参数后重新上传!');
+				UPLOADER_WINDOW_SHOW = false;
+				if (UPLOADER_WINDOW) UPLOADER_WINDOW.close();
+				return;
+			}
+			// alert(SHOW);
+			if (SHOW) {
+				// 显示图片
+				FileIndexService.show(SHOW_PARAMETERS, IMAGES_CONTAINER);
+			}
+		}
+		// alert(onUploadSuccess);
+		
+		// PARAMETERS['batch'] = Math.uuid();
+		// 上传的batch参数必须由调用的页面传入.
+		// 跨域的情况下,在可以通过将callback参数传入如下形式进行回调,url为各业务系统的参数
+		// data为返回的JSON数据,text为JSON数据的字符串形式
+		// callback=(function(data, text){window.open('url?parameterName=' + decodeURIComponent(text));});
+	</script>
+</head>
+<body onload="init()">
+  	<div id="uploaderContainer"></div>
+	<div id="images" class="preview"><!-- 图片上传后的预览窗口 --></div>
+	<div id="more" class="previewContainer" style="display: none"><a href="javascript: void(0)" onclick="FileIndexService.next()">
+		<img src="resources/template/default/images/more.png" />更多/more...</a></div>
+</body>
+</html>

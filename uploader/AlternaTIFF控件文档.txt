@@ -1,0 +1,199 @@
+http://www.alternatiff.com/scripting/
+
+[AlternaTIFF :: Technical documentation :: Scripting] 
+Client-side scripting with AlternaTIFF
+Starting with version 1.5.0 (1.5.2 for the plug-in version), AlternaTIFF supports a number of methods that may be called by the web page via client-side scripting (JavaScript or VBScript). The available methods are documented below. 
+
+Scripting can be turned off by the user (from the menu, uncheck More Settings -> Allow Scripting). If it is turned off, all methods do nothing, and return 0. Scripting can also be disabled using access controls. 
+
+A demonstration page is available. 
+
+Please note that AlternaTIFF is designed to be an interactive image viewer, not a noninteractive image printer. If you're attempting to use it noninteractivly, our ability to assist you will be very limited.
+
+
+
+--------------------------------------------------------------------------------
+
+?Methods 
+?Events 
+
+--------------------------------------------------------------------------------
+
+Methods
+AboutBox() 
+Displays AlternaTIFF's About Box. 
+GetCurrentPage() 
+Returns the page number of the page currently being displayed. Page numbers start with 1. 
+GetNumberOfPages() 
+Returns the number of pages in the current document. 
+GetState(long statevariable) 
+Query a particular state variable. The available state variables are numbered 0 to 3. The return value is specific to the state variable being queried.
+statevariable = 0 - Is scripting "ready"?
+    0 - Either scripting is disabled, or AlternaTIFF has not completed initialization.
+    1 - Scripting is ready and enabled
+statevariable = 1 - TIFF file download state.
+    0 - Download has not yet begun.
+    1 - Download in progress.
+    2 - Download complete, but TIFF file is invalid, or some other error occurred.
+    3 - Download complete, and TIFF file is valid.
+statevariable = 2 - Image display state.
+    0 - Current image could not be displayed (because it is invalid or unsupported, or AlternaTIFF is not registered).
+    1 - A valid image is currently being displayed.
+statevariable = 3 - Registration state.
+    0 - AlternaTIFF is unregistered.
+    1 - AlternaTIFF is registered (or licensed).
+
+GetValue(long setting) 
+Returns the current value of a particular setting. See SetValue() for a list of additional settings and their possible values.
+setting = 9 - Original image width in pixels [version 1.7.0+]
+setting = 10 - Original image height in pixels [version 1.7.0+]
+    The image dimensions, in pixels, prior to any adjustment, rotation, or resizing. The TIFF Orientation tag is taken into account, however.
+setting = 11 - Adjusted image width in pixels [version 1.6.1+]
+setting = 12 - Adjusted image height in pixels [version 1.6.1+]
+    The image dimensions, in pixels, after any aspect-ratio adjustment for non-square pixels, and before any image rotation.
+setting = 13 - Current image width in pixels [version 1.6.5+]
+setting = 14 - Current image height in pixels [version 1.6.5+]
+    The dimensions of the current view of the image, after any resize and rotation.
+setting = 17 - "Chrome width" in pixels [version 1.8.3+]
+setting = 18 - "Chrome height" in pixels [version 1.8.3+]
+    The horizontal (width) and vertical (height) distance consumed by the toolbar and other hypothetical "chrome" that may exist in future versions. This is not the dimensions of the toolbar; it is the amount that should be added to the image dimensions if you want to leave room for the toolbar. Currently, the "chrome width" is always 0. 
+GetValueString(long setting) [version 1.9.0+] 
+Returns the current value of a particular setting, that is represented as a string. See SetValueString() for a list of settings.
+
+GetVersion(long code) 
+code = 0 - Returns a number that identifies the version of AlternaTIFF being used. Version 1.8.2 would be returned as 1080201, for example. The last two digits are a build number, and will typically be 01 or 02.
+code = 1 - Returns a number identifying the plug-in "architecture": 1=NPAPI; 2=ActiveX. [version 2.0.0+]
+code = 2 - Returns a number identifying the "bitness" of AlternaTIFF: 32 for 32-bit; 64 for 64-bit. [version 2.0.0+]
+code = 3 - Indicates if AlternaTIFF fully supports Unicode: 0=No; 1=Yes.
+
+GoToPage(long pagenum) 
+Go to the specified page number.
+pagenum - The page number to go to. Page numbers start with 1.
+
+GoToPageSpecial(long code) 
+Go to the specified logical page.
+code = 1 - first page (same as GoToPage(1))
+code = 2 - last page
+code = 3 - previous page
+code = 4 - next page
+
+LoadImage(String url, long page, long resvd) 
+Attempt to download a new TIFF document into AlternaTIFF.
+url - The URL of the TIFF document to download
+page - The initial page to display. The first page is 1. (0 is also valid, and will start at the first page.) 
+resvd - Reserved; must be 0.
+LoadImage may not work for absolute URLs that appear to point to local files (including UNC paths). This is a security precaution, to make it more difficult for remote web sites to scan for files on your local computer or local network. As of v1.7.5, we've relaxed this restriction somewhat, by allowing access only to files whose names end in ".tif". This can be configured in "More Settings" -> "Advanced" -> "Allow scripts to open local files". Note that the web browser can also block such files if it chooses to. 
+LoadImage uses the containing web browser to download the TIFF document, so it is unlikely to work if you're trying to use AlternaTIFF in an application that is not a web browser. 
+
+As of version 1.6.4, if the url parameter is an empty string, the current TIFF document will be unloaded. 
+
+Print(long mode) 
+mode = 0 - Initiate printing of the current document. The "Print" dialog box will be displayed to the user.
+mode = 1 - Same as 0.
+mode = 2 - (reserved)
+mode = 3 - (reserved)
+mode = 4 - Auto-print to default printer with no confirmation. If not allowed by user, do nothing. [version 1.5.2+]
+mode = 5 - Auto-print to default printer with no confirmation. If not allowed by user, display the "Print" dialog box. [version 1.5.2+]
+(The odd-looking numeric codes are the result of an attempt to be compatible with previous versions of this method, compatible with the AUTOPRINT parameter, and compatible with the idea of the value being a bitfield.) 
+RegisterFileTypes(long resvd) 
+resvd - Reserved; must be 0.
+Attempt to correct installation problems by re-registering AlternaTIFF in the Windows registry. The user will be required to confirm this action.
+This function exists for tech support purposes, and normal applications should have no reason to use it.
+
+Scroll(long direction, long amount) [version 1.5.1+] 
+direction: 1=up, 2=right, 3=down, 4=left
+amount: 1="line", 2="page", 3=full
+Scroll the current image. Basically, this simulates clicking on the scroll bar.
+To scroll to an arbitrary location, instead use SetValue(15,...); SetValue(16,...). 
+SetValue(long setting, long value) 
+Modify a particular setting in AlternaTIFF. The available settings are listed below.
+setting = 1 - Image orientation
+    value = 1 - normal
+    value = 2 - rotated right
+    value = 3 - upside down
+    value = 4 - rotated left
+    value = 5 - rotate right (from current orientation)
+    value = 6 - rotate left (from current orientation)
+    value = 7 - rotate 180 degrees (from current orientation) [version 1.9.2+]
+setting = 2 - Negative image
+    value = 0 - normal
+    value = 1 - negative
+    value = 2 - toggle current setting
+setting = 3 - Smooth image [version 1.5.1+]
+    value = 0 - No smoothing (faster)
+    value = 1 - Smooth (resample) the image if possible
+setting = 4 - Mouse pointer mode [version 1.5.1+]
+    value = 0 - Zoom/magnifier
+    value = 1 - Panning
+    value = 2 - Nothing (pointer)
+setting = 5 - Size mode [version 1.5.1+]
+    value = 0 - fixed size (see setting 6: Fixed size)
+    value = 1 - fit to window width
+    value = 2 - fit to window height
+    value = 3 - best fit
+setting = 6 - Fixed size (used when Size mode = 0) [version 1.5.1+]
+    value = [percent].   The value is the percentage of the image's natural size. AlternaTIFF may not use the exact value you request. Currently it uses the nearest value from the following list: 5, 10, 17, 25, 33, 50, 70, 100, 200, 300, 400, 800, 1600. Make sure to first set the Size mode to 0 if you want this to have immediate visible effect.
+setting = 15 - Current X scroll position [version 1.6.5+]
+setting = 16 - Current Y scroll position [version 1.6.5+]
+    The scroll position of the image, in pixels from the top-left corner.
+setting = 20 - Enabled events [version 1.9.0+]
+    A bitfield representing the scripting events that are currently enabled.
+    1 = OnReady
+    2 = OnFileReady
+    4 = OnPageChange
+    8 = OnMouseModeChange
+    16 = OnSizeModeChange
+    32 = OnOrientationChange
+    64 = OnNegativeChange
+    128 = OnPrintComplete
+setting = 25 - Default Page Range [version 2.0.4+]
+    The Print dialog's default "Page Range" setting.
+    value = 0 - (unspecified)
+    value = 1 - All Pages
+    value = 2 - Current Page
+
+SetValueString(long setting, String value) [version 1.9.0+] 
+Modify a particular setting (that is represented as a string) in AlternaTIFF. The available settings are listed below.
+setting = 19 - Background color [version 1.9.0+]
+    The current background color, in HTML hex format; e.g. "#8899aa". An empty string will set the background color to the user's default background color. 
+Zoom(long mode) 
+Zoom(1) invokes the zoom window and centers the document in it.
+Zoom(0) closes the zoom window.
+There is no way to zoom to a particular part of a document. 
+
+--------------------------------------------------------------------------------
+
+Events
+An "event" is when AlternaTIFF attempts to call a scripting function on the web page. 
+Refer to Microsoft's documentation for some ways to handle events. Note that it's possible for events to be triggered before the web page has been completely downloaded. If the part of the web page containing your event handler hasn't been downloaded yet, the event won't work. 
+
+Each event can be enabled or disabled, and an event will only be triggered if it was enabled. Except for OnReady and OnFileReady, events are disabled by default. To enable events, use the ENABLEEVENTS parameter, or call SetValue(20,...). 
+
+Recursive events are not allowed. Your event handler is allowed to make scripting calls back to AlternaTIFF, but any additional events that would have occurred while your event handler is running will be suppressed. 
+
+Available events: 
+
+OnFileReady() [version 1.6.1+] 
+This event is triggered after an image file has been downloaded and displayed. This event is enabled by default. 
+OnMouseModeChange(long newmode) [version 1.9.0+] 
+Triggered after the mouse cursor mode is changed. 
+OnNegativeChange(long newmode) [version 1.9.0+] 
+Triggered after the negative-image mode is changed. 
+OnOrientationChange(long neworient) [version 1.9.0+] 
+Triggered after the orientation is changed. 
+OnPageChange(long newpage) [version 1.9.0+] 
+Triggered after the page is changed. 
+OnPrintComplete(long status) [version 1.9.0+] 
+Triggered when a printout started by the Print() method or the "autoprint" parameter is complete. A 'status' code of nonzero means apparent success; 0 means the printout failed or the user canceled it. This may be triggered either before or after the Print() method returns. This is not triggered for printouts started by the user. 
+OnReady() [version 1.6.1+] 
+This event is triggered when the control has completed initialization, and is capable of responding to scripting commands. This event is enabled by default. Caution: this event may not be reliable, because AlternaTIFF cannot always tell when the web browser has begun to process events. 
+OnSizeModeChange(long newmode, long fixedsizepct) [version 1.9.0+] 
+Triggered after the sizing mode is changed. 
+The above is for the ActiveX version of AlternaTIFF. Events are supported in Firefox and related Mozilla-based browsers, starting in AlternaTIFF version 1.8.3, but they work in a different way. Each function name must be prefixed with "atif_", and as the first parameter of the function, AlternaTIFF will pass the "id" attribute of its <object> or <embed> element. To illustrate, you would create an event handler function something like this: 
+
+  <script>
+    function atif_OnFileReady(x) { alert("Download complete: " + x); }
+  </script>
+  <embed src=test.tif id=test1 width=200 height=200>
+
+--------------------------------------------------------------------------------

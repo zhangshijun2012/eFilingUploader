@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+<hibernate-mapping>
+    <class name="com.sinosoft.efiling.hibernate.entity.Grade" table="UTIGRADE">
+        <id name="id" type="string">
+            <column name="GRADECODE" length="3" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="GRADENAME" length="40" />
+        </property>
+        <property name="remark" type="string">
+            <column name="REMARK" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FLAG" length="2" />
+        </property>
+        <property name="gradeLevel" type="string">
+            <column name="GRADELEVEL" length="1" />
+        </property>
+        <property name="gradeEName" type="string">
+            <column name="GRADEENAME" length="40" />
+        </property>
+        <set name="gradeTasks" table="UTIGRADETASK" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="GRADECODE" length="3" not-null="true" />
+            </key>
+            <one-to-many class="com.sinosoft.efiling.hibernate.entity.GradeTask" />
+        </set>
+    </class>
+</hibernate-mapping>
